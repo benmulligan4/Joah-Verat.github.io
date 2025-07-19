@@ -1,0 +1,8 @@
+Hero Icon
+Collections/Groups of Photos
+Add videos or movie section that either hosts the video or imports a video player
+Joah chooses the font
+Link domain for the website using Joah's GitHub
+
+What do you mean by CSS scrolling thing?
+Do you want a white background and black text?
