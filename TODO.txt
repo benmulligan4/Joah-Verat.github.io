@@ -4,5 +4,25 @@ Add videos or movie section that either hosts the video or imports a video playe
 Joah chooses the font
 Link domain for the website using Joah's GitHub
 
+Joah's Homework:
+Gather more images and ideally organise them by group/collection (then I'll add them and then we can discuss the layout)
+Write a little bit for the about me section, just a short summary of who you are and what services you can provide (Think about if you want to add work experience or your education to it like linked in)
+
 What do you mean by CSS scrolling thing?
 Do you want a white background and black text?
+
+Decide if you are happy with the burger icon
+Add video and Youtube API
+Make it in a white mode
+Have the collections reroute the user
+Decide if each collection is having it's own image viewer scroller or if there is one for everthing
+Add arrow to the portfolio dropdown?
+
+
+
+Agenda:
+Talk about what's new
+Ask Joah questions
+Setup Joah's Github and URL
+Give Joah Homework
+Discuss future improvements and features
