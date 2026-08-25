@@ -45,7 +45,7 @@
 </head>
 
 <body
-        class="dark:bg-black bg-white h-screen text-black dark:text-white px-5 md:px-20 opacity-0 animate-fade-in transition duration-500">
+        class="dark:bg-black bg-[#f0f8ff] h-screen text-black dark:text-white px-5 md:px-20 opacity-0 animate-fade-in transition duration-500">
 <!-- Navbar -->
 <header class="flex w-full overflow-hidden md:overflow-visible pt-10 pb-1">
   <nav id="nav" x-data="{ open: false, dropdownOpen: false, dropdownTimeout: null }" role="navigation" class="w-full">
@@ -56,15 +56,6 @@
 
       <!-- Mobile Burger + Dark Toggle -->
       <div class="ml-auto md:hidden flex items-center gap-3">
-        <button id="dark-toggle-mobile" onclick="toggleDark()" aria-label="Toggle dark mode"
-          class="tap-highlight-transparent text-black dark:text-white focus:outline-none w-6 h-6 flex items-center justify-center">
-          <svg id="sun-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="hidden w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07-6.07-.71.71M6.34 17.66l-.71.71m12.73 0-.71-.71M6.34 6.34l-.71-.71M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
-          </svg>
-          <svg id="moon-icon-mobile" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        </button>
         <button
           @click="open = !open"
           class="tap-highlight-transparent text-black dark:text-white w-6 h-6 relative focus:outline-none"
@@ -138,18 +129,7 @@
             </a>
           </li>
 
-          <!-- Dark Mode Toggle -->
-          <li class="hidden md:flex items-center -translate-y-1">
-            <button id="dark-toggle-desktop" onclick="toggleDark()" aria-label="Toggle dark mode"
-              class="text-black dark:text-white focus:outline-none w-8 h-8 flex items-center justify-center">
-              <svg id="sun-icon-desktop" xmlns="http://www.w3.org/2000/svg" class="hidden w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m8.66-9h-1M4.34 12h-1m15.07-6.07-.71.71M6.34 17.66l-.71.71m12.73 0-.71-.71M6.34 6.34l-.71-.71M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/>
-              </svg>
-              <svg id="moon-icon-desktop" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-              </svg>
-            </button>
-          </li>
+
 
         </ul>
       </div>
@@ -525,27 +505,14 @@
   <script src="dist/fade_in.js"></script>
   <script src="dist/menu.js"></script>
   <script>
-    function toggleDark() {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      updateIcons(isDark);
-    }
-
-    function updateIcons(isDark) {
-      document.getElementById('sun-icon-desktop').classList.toggle('hidden', !isDark);
-      document.getElementById('moon-icon-desktop').classList.toggle('hidden', isDark);
-      document.getElementById('sun-icon-mobile').classList.toggle('hidden', !isDark);
-      document.getElementById('moon-icon-mobile').classList.toggle('hidden', isDark);
-    }
-
-    // Apply saved or system preference on load
+    // Apply theme based on ?bg= URL param (white/light or black/dark); default is light baby blue
     (function () {
-      const saved = localStorage.getItem('theme');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const isDark = saved ? saved === 'dark' : prefersDark;
-      if (isDark) document.documentElement.classList.add('dark');
-      // Icons update after DOM is ready
-      document.addEventListener('DOMContentLoaded', () => updateIcons(isDark));
+      const bg = (new URLSearchParams(window.location.search).get('bg') || '').toLowerCase();
+      if (bg === 'black' || bg === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (bg === 'white' || bg === 'light') {
+        document.body.style.backgroundColor = '#ffffff';
+      }
     })();
   </script>
 </body>
