@@ -4,12 +4,12 @@
 
 @layer base {
   body {
-    font-family: Courier, monospace;
+    font-family: 'Courier New', monospace;
   }
 }
 @layer utilities {
   .font-signika {
-    font-family: Courier, monospace;
+    font-family: 'Courier New', monospace;
   }
 
   .tap-highlight-transparent {
