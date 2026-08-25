@@ -7,3 +7,5 @@ For the landing page, just for now just have it be a couple of photos. Just keep
 He wants me to have alot of created fun with this
 
 Put at the top under his name, graphic design, travel photography, prints, film digital (maybe have this text dynamically show as if he is typing it)
+
+Update the drop down so that it looks like it is part of the thing
