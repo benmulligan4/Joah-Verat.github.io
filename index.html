@@ -157,11 +157,18 @@
   </nav>
 </header>
 
+<!-- View Mode Toggle Button -->
+<div class="fixed top-20 right-4 z-50">
+  <button id="view-toggle" onclick="toggleViewMode()"
+    class="font-signika text-sm px-3 py-2 bg-white dark:bg-black border border-black dark:border-white text-black dark:text-white rounded shadow">
+    ⊞ Grid
+  </button>
+</div>
 
 <!-- Main Content -->
-<div class="container mx-auto">
+<div id="portfolio-main" class="container mx-auto">
   <h1 class="text-4xl pt-10 pb-8 font-bold">PORTFOLIO</h1>
-  <section class="text-neutral-700">
+  <section class="text-neutral-700 collection-grid">
     <div class="container w-full">
       <div class="flex flex-wrap w-full">
         <!-- Repeat this block for each image -->
@@ -223,12 +230,13 @@
       </div>
     </div>
   </section>
+  <div id="portfolio-main-slideshow" class="collection-slideshow" style="height:80vh;position:relative;display:none;"></div>
 </div>
 
   <!-- Collection 1 Content -->
   <div id="collection1" class="container mx-auto">
   <h1 class="text-2xl pt-10 pb-8 font-bold">COLLECTION 1</h1>
-  <section class="text-neutral-700">
+  <section class="text-neutral-700 collection-grid">
     <div class="container w-full">
       <div class="flex flex-wrap w-full">
         <!-- Repeat this block for each image -->
@@ -284,12 +292,13 @@
       </div>
     </div>
   </section>
+  <div id="collection1-slideshow" class="collection-slideshow" style="height:80vh;position:relative;display:none;"></div>
 </div>
 
 <!-- Custom Example Collection for Joah -->
   <div id="collection2" class="container mx-auto">
       <h1 class="text-2xl pt-10 pb-8 font-bold">EXAMPLE COLLECTION 2</h1>
-    <section class="text-neutral-700">
+    <section class="text-neutral-700 collection-grid">
       <div class="container w-full">
         <div class="flex flex-wrap w-full">
           <div class="flex w-full md:w-1/2 flex-wrap">
@@ -465,6 +474,7 @@
         </div>
       </div>
     </section>
+    <div id="collection2-slideshow" class="collection-slideshow" style="height:80vh;position:relative;display:none;"></div>
   </div>
 
 
@@ -524,6 +534,100 @@
   </script>
   <script src="dist/fade_in.js"></script>
   <script src="dist/menu.js"></script>
+  <script>
+    // View mode toggle — slideshow (default) vs grid
+    const _collectionIds = ['portfolio-main', 'collection1', 'collection2'];
+    const _carousels = {};
+    let _isSlideshowMode = true;
+
+    function toggleViewMode() {
+      _isSlideshowMode = !_isSlideshowMode;
+      _applyViewMode();
+    }
+
+    function _buildCarousel(collectionId) {
+      const container = document.getElementById(collectionId + '-slideshow');
+      const collEl = document.getElementById(collectionId);
+      if (!container || !collEl) return;
+      const links = Array.from(collEl.querySelectorAll('a[data-fancybox]'));
+      if (!links.length) return;
+
+      const galleryItems = links.map(a => ({
+        src: a.getAttribute('href'),
+        type: 'image',
+        caption: a.querySelector('img') ? a.querySelector('img').alt : '',
+      }));
+
+      _carousels[collectionId] = { links, galleryItems, current: 0 };
+
+      const firstImg = links[0].querySelector('img');
+      container.innerHTML =
+        '<div class="relative w-full h-full flex items-center justify-center bg-black">' +
+          '<img id="' + collectionId + '-slide-img"' +
+               ' src="' + firstImg.src + '"' +
+               ' alt="' + firstImg.alt + '"' +
+               ' class="max-h-full max-w-full object-contain cursor-pointer" />' +
+          '<button onclick="_prevSlide(\'' + collectionId + '\')"' +
+            ' class="absolute left-4 top-1/2 -translate-y-1/2 text-white text-5xl font-thin leading-none select-none bg-black bg-opacity-40 px-2 rounded">&#8249;</button>' +
+          '<button onclick="_nextSlide(\'' + collectionId + '\')"' +
+            ' class="absolute right-4 top-1/2 -translate-y-1/2 text-white text-5xl font-thin leading-none select-none bg-black bg-opacity-40 px-2 rounded">&#8250;</button>' +
+          '<div class="absolute bottom-4 w-full text-center font-signika text-white text-sm select-none">' +
+            '<span id="' + collectionId + '-slide-counter">1 / ' + links.length + '</span>' +
+          '</div>' +
+        '</div>';
+
+      // Clicking the image opens Fancybox fullscreen at the current slide — same as clicking in grid view
+      document.getElementById(collectionId + '-slide-img').addEventListener('click', function () {
+        const c = _carousels[collectionId];
+        Fancybox.show(c.galleryItems, { startIndex: c.current });
+      });
+    }
+
+    function _updateSlide(collectionId) {
+      const c = _carousels[collectionId];
+      const img = c.links[c.current].querySelector('img');
+      document.getElementById(collectionId + '-slide-img').src = img.src;
+      document.getElementById(collectionId + '-slide-img').alt = img.alt;
+      document.getElementById(collectionId + '-slide-counter').textContent = (c.current + 1) + ' / ' + c.links.length;
+    }
+
+    function _prevSlide(collectionId) {
+      const c = _carousels[collectionId];
+      c.current = (c.current - 1 + c.links.length) % c.links.length;
+      _updateSlide(collectionId);
+    }
+
+    function _nextSlide(collectionId) {
+      const c = _carousels[collectionId];
+      c.current = (c.current + 1) % c.links.length;
+      _updateSlide(collectionId);
+    }
+
+    function _applyViewMode() {
+      const btn = document.getElementById('view-toggle');
+
+      document.querySelectorAll('.collection-grid').forEach(el => {
+        el.style.display = _isSlideshowMode ? 'none' : '';
+      });
+      document.querySelectorAll('.collection-slideshow').forEach(el => {
+        el.style.display = _isSlideshowMode ? '' : 'none';
+      });
+
+      if (_isSlideshowMode) {
+        btn.textContent = '\u229e Grid';
+        _collectionIds.forEach(id => _buildCarousel(id));
+      } else {
+        btn.textContent = '\u25b6 Slideshow';
+        _collectionIds.forEach(id => {
+          const container = document.getElementById(id + '-slideshow');
+          if (container) container.innerHTML = '';
+          delete _carousels[id];
+        });
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', _applyViewMode);
+  </script>
   <script>
     function toggleDark() {
       const isDark = document.documentElement.classList.toggle('dark');
