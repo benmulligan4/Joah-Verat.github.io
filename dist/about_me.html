@@ -20,10 +20,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap" rel="stylesheet">
   <!-- End - Fonts -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            'nothingyoucoulddo': ['Nothing You Could Do', 'cursive'],
+            'signika': ['Signika', 'sans-serif'],
+          },
+        },
+      },
+      plugins: [],
+    }
+  </script>
 </head>
 
 <body
-  class="dark:bg-black bg-white h-screen text-black dark:text-white px-5 md:px-20 opacity-0 animate-fade-in transition duration-500">
+  class="dark:bg-black bg-[#f0f8ff] h-screen text-black dark:text-white px-5 md:px-20 opacity-0 animate-fade-in transition duration-500">
   <!-- Navbar -->
   <header class="flex w-full overflow-hidden pt-10 pb-1">
     <nav id="nav" x-data="{ open: false }" role="navigation" class="w-full">
@@ -171,6 +186,16 @@
   </footer>
   <script src="fade_in.js"></script>
   <script src="menu.js"></script>
+  <script>
+    (function () {
+      const bg = (new URLSearchParams(window.location.search).get('bg') || '').toLowerCase();
+      if (bg === 'black' || bg === 'dark') {
+        document.documentElement.classList.add('dark');
+      } else if (bg === 'white' || bg === 'light') {
+        document.body.style.backgroundColor = '#ffffff';
+      }
+    })();
+  </script>
 </body>
 
 </html>
