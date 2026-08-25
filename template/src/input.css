@@ -1,7 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    font-family: Courier, monospace;
+  }
+}
 @layer utilities {
+  .font-signika {
+    font-family: Courier, monospace;
+  }
+
   .tap-highlight-transparent {
     -webkit-tap-highlight-color: transparent;
   }
