@@ -52,6 +52,7 @@
     <div class="container mx-auto flex flex-wrap items-center md:flex-no-wrap relative z-50">
       <div class="mr-4 md:mr-8">
         <a href="index.html" class="text-2xl font-signika font-bold">JOAH VERAT</a>
+        <p class="font-signika text-sm text-gray-500 dark:text-gray-400 h-5"><span id="typewriter"></span><span class="typewriter-cursor">|</span></p>
       </div>
 
       <!-- Mobile Burger + Dark Toggle -->
@@ -504,6 +505,41 @@
   </script>
   <script src="dist/fade_in.js"></script>
   <script src="dist/menu.js"></script>
+  <script>
+    (function () {
+      const words = ['Photographer', 'Graphic Designer', 'Prints', 'Musician', 'Videographer', 'Creative'];
+      let wordIndex = 0;
+      let charIndex = 0;
+      let isDeleting = false;
+      const el = document.getElementById('typewriter');
+
+      function type() {
+        const current = words[wordIndex];
+        if (isDeleting) {
+          el.textContent = current.substring(0, charIndex - 1);
+          charIndex--;
+        } else {
+          el.textContent = current.substring(0, charIndex + 1);
+          charIndex++;
+        }
+
+        let delay = isDeleting ? 60 : 100;
+
+        if (!isDeleting && charIndex === current.length) {
+          delay = 1800;
+          isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+          isDeleting = false;
+          wordIndex = (wordIndex + 1) % words.length;
+          delay = 400;
+        }
+
+        setTimeout(type, delay);
+      }
+
+      setTimeout(type, 600);
+    })();
+  </script>
   <script>
     // Apply theme based on ?bg= URL param (white/light or black/dark); default is light baby blue
     (function () {
