@@ -14,11 +14,7 @@
   <link rel="stylesheet" href="styles.css" />
   <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <!-- Start - Fonts -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Signika:wght@400;700&display=swap" rel="stylesheet">
-  <!-- End - Fonts -->
+
   <!-- Start - Fancybox Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
@@ -34,8 +30,8 @@
         extend:
                 {
                   fontFamily: {
-                    'nothingyoucoulddo': ['Nothing You Could Do', 'cursive'],
-                    'signika': ['Signika', 'sans-serif'],
+                    'nothingyoucoulddo': ['Times New Roman', 'Times', 'serif'],
+                    'signika': ['Times New Roman', 'Times', 'serif'],
                   },
                 },
       },
@@ -45,7 +41,7 @@
 </head>
 
 <body
-        class="dark:bg-black bg-[#f0f8ff] h-screen text-black dark:text-white px-5 md:px-20 opacity-0 animate-fade-in transition duration-500">
+        class="dark:bg-black bg-[#f0f8ff] h-screen text-black dark:text-white px-5 md:px-20 opacity-0 animate-fade-in transition duration-500 font-signika">
 <!-- Navbar -->
 <header class="flex w-full overflow-hidden md:overflow-visible pt-10 pb-1">
   <nav id="nav" x-data="{ open: false, dropdownOpen: false, dropdownTimeout: null }" role="navigation" class="w-full">
